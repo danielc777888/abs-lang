@@ -1,0 +1,22 @@
+start
+<
+  int j = 10 + 7 - 6;
+  output(j);
+>
+
+can Factorial(int num)
+gives int
+<
+  if (num is= 0)
+ <
+  gives 1;
+  >else
+  <
+    gives Factorial(num -1) * num;
+  >
+
+    
+>
+    
+
+

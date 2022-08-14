@@ -1,0 +1,201 @@
+start
+<
+    output('Welcome to the Noughts and Crosses game!\n');
+    int player1Wins =0;
+    int player2Wins = 0;
+    int numDraws =0;
+    text command = 'P';
+    while (command isnot= 'Q')
+    <
+     output('\nPress P-Play or Q-Quit\n');
+     command = input();
+     
+    if (command is= 'P')
+    <
+        DisplayInitialBoard();
+        listof playerOneMoves = listof(9,int);
+        listof playerTwoMoves = listof(9,int);
+        int gameFinished = 0;
+        int player = 1;
+        int numMoves = 0;
+        while (gameFinished is= 0)
+        <
+            
+            int move = AskForMove(player);
+            
+            
+            #check if move is valid
+            if (MoveValid(move) is= 0)
+            <
+              output('\nMove ');output(move);output(' not valid!\n');
+            >
+            else
+            <
+            #check if move already done
+            if (playerTwoMoves[move] is= 1 or playerOneMoves[move] is= 1)
+            <
+              output('\nMove ');output(move);output(' already taken!\n');
+            >
+            else
+            <    
+            
+            #update player move list
+            if (player is= 2)
+            <
+                playerTwoMoves[move] = 1;
+             >
+            else
+            <
+                playerOneMoves[move] = 1;
+            >
+            
+            
+            #display moves
+            output('   __ __ __\n');
+            output('0 |');
+            int idx = 0;
+            
+            while(idx is< 9)
+            <
+               text xo = ' ';
+               int p1 = playerOneMoves[idx];
+               if (p1 is= 1)
+               <
+                xo = 'X';
+               >
+               int p2 = playerTwoMoves[idx];
+               if (p2 is= 1)
+               <
+                xo = '0';
+               >  
+               output(xo);
+               output(' |');
+               idx = idx + 1;
+               
+               if (idx is= 3)
+               <
+               output(' 2\n');
+               output('   __ __ __\n3 |');
+               >
+               if (idx is= 6)
+               <
+                output(' 5\n');
+                output('   __ __ __\n6 |');
+               >
+            >
+            
+            output(' 8\n');
+            output('   __ __ __\n');
+            
+            
+            
+            #check for win conditions
+            if ( (playerOneMoves[0] is= 1 and playerOneMoves[1] is= 1 and playerOneMoves[2] is= 1)
+            or (playerOneMoves[3] is= 1 and playerOneMoves[4] is= 1 and playerOneMoves[5] is= 1)
+            or (playerOneMoves[6] is= 1 and playerOneMoves[7] is= 1 and playerOneMoves[8] is= 1)
+            or (playerOneMoves[0] is= 1 and playerOneMoves[3] is= 1 and playerOneMoves[6] is= 1)
+            or (playerOneMoves[1] is= 1 and playerOneMoves[4] is= 1 and playerOneMoves[7] is= 1)
+            or (playerOneMoves[2] is= 1 and playerOneMoves[5] is= 1 and playerOneMoves[8] is= 1)
+            or (playerOneMoves[0] is= 1 and playerOneMoves[4] is= 1 and playerOneMoves[8] is= 1)
+            or (playerOneMoves[2] is= 1 and playerOneMoves[4] is= 1 and playerOneMoves[6] is= 1))
+            <
+                gameFinished = 1;
+                player1Wins = player1Wins + 1;
+                output('\nPlayer 1 WINS!');
+            >
+            
+            if ( (playerTwoMoves[0] is= 1 and playerTwoMoves[1] is= 1 and playerTwoMoves[2] is= 1)
+            or (playerTwoMoves[3] is= 1 and playerTwoMoves[4] is= 1 and playerTwoMoves[5] is= 1)
+            or (playerTwoMoves[6] is= 1 and playerTwoMoves[7] is= 1 and playerTwoMoves[8] is= 1)
+            or (playerTwoMoves[0] is= 1 and playerTwoMoves[3] is= 1 and playerTwoMoves[6] is= 1)
+            or (playerTwoMoves[1] is= 1 and playerTwoMoves[4] is= 1 and playerTwoMoves[7] is= 1)
+            or (playerTwoMoves[2] is= 1 and playerTwoMoves[5] is= 1 and playerTwoMoves[8] is= 1)
+            or (playerTwoMoves[0] is= 1 and playerTwoMoves[4] is= 1 and playerTwoMoves[8] is= 1)
+            or (playerTwoMoves[2] is= 1 and playerTwoMoves[4] is= 1 and playerTwoMoves[6] is= 1))
+            <
+                gameFinished = 1;
+                player2Wins = player2Wins + 1;
+                output('\nPlayer 2 WINS!');
+            >
+                   
+            #check for draw
+            if (numMoves is= 8 and gameFinished is= 0)
+            <
+                gameFinished = 1;
+                output('\nThe game has ended in a DRAW!\n');
+                numDraws = numDraws + 1;
+            >
+            
+            
+            numMoves = numMoves + 1;
+            #increment and alternate
+            if (player is= 2)
+            <
+                player = 1;
+            >
+            else
+            <
+                player = 2;
+            >
+            >
+         >
+                        
+        >
+        #display standings
+        output('\n\nSTANDINGS\n');
+        output('------------\n');
+        output('DRAWS : ');output(numDraws);
+        output('\nPLAYER 1 WINS : ');output(player1Wins);
+        output('\nPLAYER 2 WINS : ');output(player2Wins);output('\n');
+    >
+   
+    if (command isnot= 'P' and command isnot= 'Q')
+    <
+        output('\nCommand not valid.\n');
+    >
+        
+    >
+    
+    output('\nThank you for playing, see you again!');
+    
+>
+
+#Displays initial layout
+can DisplayInitialBoard()
+<
+  output('   __ __ __\n');
+  output('  |0 |1 |2 |\n');
+  output('   __ __ __\n');
+  output('  |3 |4 |5 |\n');
+  output('   __ __ __\n');
+  output('  |6 |7 |8 |\n');
+  output('   __ __ __\n');
+>
+
+#Asks player for input to make a move
+can AskForMove(int player)
+gives int
+<
+    output('\nPlayer ');
+    output(player);
+    output(' please enter your move: eg. 5\n');
+    int move = input();
+    gives move;
+>
+
+#Checks if specific move is valid
+can MoveValid(int move)
+gives int
+<
+    if (move is< 0 or move is> 8)
+    <
+        gives 0;
+    >
+    else
+    <
+        gives 1;
+    >
+>
+        
+
+    
